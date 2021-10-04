@@ -4,14 +4,6 @@ import { log } from './utils/logger';
 import { submitVwap } from './utils/txn-utils';
 import { config } from './config';
 
-/**
- * TO DO :
- * - Test redundancy
- * - Dockerise the setup
- * - Test Docker on remote
- * - Documentation
- */
-
 const submit_vwap_to_blockchain = config.submit_vwap_to_blockchain;
 
 @Injectable()

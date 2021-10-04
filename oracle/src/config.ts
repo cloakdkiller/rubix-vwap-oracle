@@ -30,5 +30,5 @@ export const config = {
   vwap_period_seconds: Number(process.env.vwap_period_seconds) || 86400, // seconds - 24h
   vwap_submission_frequency: Number(process.env.vwap_submission_frequency) || 600000, // miliseconds - 10 minutes
   sync_trades_from_bs_frequency: Number(process.env.sync_trades_from_bs_frequency) || 10000,
-  submit_vwap_to_blockchain: process.env.submit_vwap_to_blockchain === 'true' ? true : false || true,
+  submit_vwap_to_blockchain: process.env.submit_vwap_to_blockchain === 'false' ? false : true || true,
 };
