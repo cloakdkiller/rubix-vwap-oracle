@@ -14,4 +14,5 @@ services:
       - vwap_period_seconds=86400
       - vwap_submission_frequency=60000
       - sync_trades_from_bs_frequency=10000
+      - submit_vwap_to_blockchain=true
     network_mode: host

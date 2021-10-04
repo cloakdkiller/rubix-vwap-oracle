@@ -58,6 +58,7 @@ Open `docker-compose.yml` edit required fields.
 | vwap_period_seconds           | How many seconds the VWAP is calculated over, default is `86400` (1 day)                         |
 | vwap_submission_frequency     | How often the VWAP is calculated and submitted to the blockchain in milliseconds                 |
 | sync_trades_from_bs_frequency | how often the API will sync new trades from the block-service, in milliseconds. default `10,000` |
+| submit_vwap_to_blockchain     | `true` or `false`. determines whether the application should submit values to the blockchain.    |
 
 #### Configure the firewall
 It's recommended that you block all incoming connections, except for SSH connections from whitelisted IP addresses, and port 3000, again whitelisted IP's only. Your cloud provider should provide an interface for this.
