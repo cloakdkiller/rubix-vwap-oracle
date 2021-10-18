@@ -36,7 +36,9 @@ export class EthPriceService {
         }
       }
     } catch (err) {
-      log.error(`could not retrieve ETH price, reason : ${err.response?.statusText}`);
+      const err_response = err.response ? err.response.statusText || err.response : err;
+      log.warn(`could not retrieve ETH price`);
+      log.warn(err_response)
     }
   };
 }
