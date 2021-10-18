@@ -1,9 +1,9 @@
-version: '3'
+version: '3.4'
 services:
   rbx_oracle:
     build: ./
     environment:
-      - block_service_urls=<rbx_blockservice_url>,78.141.225.103:3535
+      - block_service_urls=127.0.0.1:3535,78.141.225.103:3535
       - check_eth_price_frequency=60000
       - etherscan_api_key=2BVRWD5JD47WZDUY676ZJXJNUNHV6U69UR
       - network=mainnet
