@@ -17,7 +17,6 @@ export class TradeHistoryService {
       let last_tx_uid;
       for (const update of updates) {
         last_tx_uid = update.tx_uid;
-        // await processor.processUpdate(update, true);
       }
       load(last_tx_uid);
     }
@@ -29,8 +28,6 @@ export class TradeHistoryService {
     }
 
     async function startLoading(resolver) {
-    //   db = await getDatabase();
-    //   processor.setDb(db);
 
       done = resolver;
       load(starting_tx_uid);
