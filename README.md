@@ -9,8 +9,6 @@
 
 Read more about the blockservice here : https://github.com/Lamden/lamden_block_service
 
-For convenience I have packaged the same as a docker container here : https://github.com/cloakdkiller/lamden_block_service
-
 ### Minimum Specs
 The blockservice is a lightweight application, it will need a 2 core machine, with at least 25gb space. As the Lamden blockchain grows it will be necessary to upgrade the disk space.
 
@@ -19,15 +17,34 @@ The blockservice is a lightweight application, it will need a 2 core machine, wi
 #### Install Dependancies
 1. [Mongo DB (latest)](https://docs.mongodb.com/manual/installation/)
 2. [Nodejs and NPM](https://nodejs.org/en/)
-3. [Docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04)
+3. PM2 - https://pm2.keymetrics.io/docs/usage/quick-start/
 4. Clone https://github.com/cloakdkiller/lamden_block_service.git to your host machine.
+
+#### Configure PM2 process manager
+1. From project root `touch ecosystem.config.js`
+2. nano `ecosystem.config.js`
+3. paste the below code and press `ctrl-x` to exit & confirm you want to save.
+```
+module.exports = {
+  "apps" : [{
+    "name"      : "block_service",
+    "script"    : "npm run start",
+    "env": {
+      "NETWORK": "mainnet",
+      "BLOCKSERVICE_HOST": "0.0.0.0",
+    }}
+  ]
+}
+```
 
 #### Configure the firewall
 I recommend you only allow connections from the machine which will be running the oracle process on ports 3535 & 3536
 
+
 #### Running the app
 1.  Ensure mongo is running.`sudo systemctl start mongod.service`
-2.  From project root `docker-compose up --build`
+2.  From project root `pm2 start ecosystem.config.js`
+3.  `pm2 save` to set pm2 to run on system start.
 
 
 ## Install and run the Oracle
@@ -39,11 +56,11 @@ The oracle is a lightweight application, it will need a 2 core machine, with at 
 
 #### Install Dependencies
 1. [Nodejs and NPM](https://nodejs.org/en/)
-2. [Docker](https://www.digitalocean.com/community/tutorials/
+3. PM2 - https://pm2.keymetrics.io/docs/usage/quick-start/
 3. Clone this repository to your host machine.
 
 #### Configure the application
-Open `docker-compose.yml` edit required fields.
+Open `ecosystem.config.js`, edit required fields.
 
 | variable                      | explanation                                                                                      |
 | ----------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -71,7 +88,8 @@ If you wish to provide a data visualisation in the rubix application, a sensible
 *if the UI is experiencing significant load, a seperate instance of the oracle process could be created, with blockchain submission functionality disabled.*
 
 ##### Running the app
-- From the project root directory `docker-compose up --build`
+- From the project root directory `pm2 start ecosystem.config.js`
+- Configure this service to run at system startup `pm2 save`
 
 # API
 There is a basic REST API, which allows querying values in the local DB.
