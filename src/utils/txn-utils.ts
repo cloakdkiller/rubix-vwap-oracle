@@ -1,5 +1,6 @@
 const Lamden = require('lamden-js');
 import { config } from '../config';
+import { log } from './logger'
 
 export const create_lamden_wallet = () => Lamden.wallet.new_wallet();
 
@@ -21,7 +22,7 @@ export const submitVwap = async (vwap: number) => {
 
   return await tx.send(config.operator_sk, undefined, async (res, err) => {
     if (err) throw new Error(err);
-    console.log(res.hash);
+    log.log(res.hash);
     return await tx.checkForTransactionResult();
   });
 };

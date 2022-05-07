@@ -138,7 +138,7 @@ export const syncHistoryToDb = async (starting_tx_id = '0', batch_size = 1000, h
 
   if (length === batch_size) {
     const tx_uid = res.history[res.history.length - 1].tx_uid;
-    console.log('getting more blocks from tx_uid : ' + tx_uid);
+    log.log('getting more blocks from tx_uid : ' + tx_uid);
     return await syncHistoryToDb(tx_uid, batch_size, history);
   }
   const trades = await parseTrades(history);

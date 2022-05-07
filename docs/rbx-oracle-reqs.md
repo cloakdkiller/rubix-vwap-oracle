@@ -37,7 +37,6 @@ The application will consist of :
 * VWAP Calculation Module
 * BlockService Provider - manages communication with the block-service instance, redundancy fallback strategy, syncs blockchain history
 * SQLITE DB for handling oracleVM specific state.
-* WalletService, handles submitting events to the blockchain
 
 ## Technologies
 * NestJS - Backend Framework

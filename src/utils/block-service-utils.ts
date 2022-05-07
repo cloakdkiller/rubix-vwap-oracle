@@ -65,6 +65,7 @@ export const getRootKeyChanges = async (args: {
   limit: number;
 }) => {
   try {
+    // http://78.141.225.103:3535/rootkey_history?contract=con_rswp_lst001&variable=balances&root_key=burn&last_tx_uid=0&limit=10000
     const { contractName, variableName, root_key, last_tx_uid, limit } = args;
     let endpoint = 'rootkey_history';
     let query = [`contract=${contractName}`, `variable=${variableName}`, `root_key=${root_key}`, `last_tx_uid=${last_tx_uid}`, `limit=${limit}`].join('&');
