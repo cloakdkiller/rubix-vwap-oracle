@@ -10,7 +10,7 @@ export class TradeHistoryService {
     let done;
 
     async function getUpdates(last_tx_uid) {
-      return await this.blockService.getRootKeyChanges("con_weth_lst001", 'S', last_tx_uid, 1, 50);
+      return await this.blockService.getRootKeyChanges("con_lusd_lst001", 'S', last_tx_uid, 1, 50);
     }
 
     async function processUpdates(updates) {

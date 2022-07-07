@@ -2,7 +2,7 @@ import { Entity, Column, BaseEntity, PrimaryGeneratedColumn, PrimaryColumn } fro
 import { log } from '../utils/logger';
 import { config } from '../config';
 import { getNumberFromFixed, getRootKeyChanges } from '../utils/block-service-utils';
-import { EthPriceEntity } from './eth-price.entity';
+import { UsdcPriceEntity } from './usdc-price.entity';
 
 @Entity()
 export class TradeEntity extends BaseEntity implements ITrade {
@@ -64,7 +64,7 @@ export const saveTradesToDb = async (trades: ITrade[]) => {
  * - returns an array of trades which implement ITrade
  */
 
-export const parseTrades = async (history: any[], token_contract_name = 'con_weth_lst001') => {
+export const parseTrades = async (history: any[], token_contract_name = 'con_lusd_lst001') => {
   try {
     let most_recent_trade = await findMostRecentTradeFromDb();
     const most_recent_trade_uid = most_recent_trade ? most_recent_trade.tx_uid : '0';
@@ -83,7 +83,7 @@ export const parseTrades = async (history: any[], token_contract_name = 'con_wet
     });
 
     const parsed_trades: ITrade[] = [];
-    const weth_price = await EthPriceEntity.findOne();
+    const usdc_price = await UsdcPriceEntity.findOne();
 
     trade_transactions.forEach((curr_value, index) => {
       const prev_value = trade_transactions[index - 1];
@@ -103,7 +103,7 @@ export const parseTrades = async (history: any[], token_contract_name = 'con_wet
       const tx_uid = curr_value.tx_uid;
       const timestamp = curr_value.timestamp;
       const base_price = getNumberFromFixed(curr_value.state_changes_obj[`${config.amm_contract}`].prices[`${token_contract_name}`]);
-      const dollar_price = Number(weth_price.last_price) / base_price;
+      const dollar_price = Number(usdc_price.last_price) / base_price;
       const dollar_volume = dollar_price * base_volume;
 
       const trade: ITrade = {
@@ -125,7 +125,7 @@ export const parseTrades = async (history: any[], token_contract_name = 'con_wet
   }
 };
 
-export const syncHistoryToDb = async (starting_tx_id = '0', batch_size = 1000, history = [], contractName: string = 'con_weth_lst001') => {
+export const syncHistoryToDb = async (starting_tx_id = '0', batch_size = 1000, history = [], contractName: string = 'con_lusd_lst001') => {
   const res = await getRootKeyChanges({
     contractName,
     variableName: 'balances',
