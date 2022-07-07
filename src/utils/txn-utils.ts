@@ -18,11 +18,18 @@ export const create_transaction_info = (vwap: number) => {
 };
 
 export const submitVwap = async (vwap: number) => {
-  let tx = new Lamden.TransactionBuilder(config.network, create_transaction_info(vwap));
+  try {
+    let tx = new Lamden.TransactionBuilder(config.network, create_transaction_info(vwap));
 
-  return await tx.send(config.operator_sk, undefined, async (res, err) => {
-    if (err) throw new Error(err);
-    log.log(res.hash);
-    return await tx.checkForTransactionResult();
-  });
+    return await tx.send(config.operator_sk, undefined, async (res, err) => {
+      if (err) {
+        console.log({ err })
+        throw new Error(err);
+      }
+      log.log(res.hash);
+      return await tx.checkForTransactionResult();
+    });
+  } catch (err) {
+    log.log({ err })
+  }
 };
